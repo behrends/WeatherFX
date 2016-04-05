@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.FlowPane?>
+
+
+<FlowPane alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml" fx:controller="de.dhbw.weatherfx.Controller">
+   <children>
+      <Button text="Klick mich" />
+   </children>
+</FlowPane>
