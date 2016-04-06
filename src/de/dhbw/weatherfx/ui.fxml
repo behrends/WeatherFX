@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.FlowPane?>
 
-
-<FlowPane alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml" fx:controller="de.dhbw.weatherfx.Controller">
+<FlowPane alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="400" prefWidth="600" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/null" fx:controller="de.dhbw.weatherfx.Controller">
    <children>
-      <Button text="Klick mich" />
+      <Button fx:id="myButton" onAction="#myButtonClicked" text="Klick mich" />
+      <Label fx:id="myLabel" text="nicht geklickt" />
    </children>
 </FlowPane>
