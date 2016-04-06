@@ -1,0 +1,8 @@
+/* all buttons will be blue with white text */
+.button {
+    -fx-background-color: #286090;
+    -fx-text-fill: #fff;
+}
+
+/* UI-Elements with this class will have red text */
+.red { -fx-text-fill: red; }
