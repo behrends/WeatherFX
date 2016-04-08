@@ -13,7 +13,7 @@
    </stylesheets>
 
    <children>
-      <Button fx:id="myButton" onAction="#myButtonClicked" text="Klick mich" />
+      <Button onAction="#myButtonClicked" text="Klick mich" />
       <Label fx:id="myLabel" text="nicht geklickt" styleClass="red" />
    </children>
 </FlowPane>
