@@ -6,9 +6,9 @@ import javafx.scene.control.Label;
 
 public class Controller {
     @FXML
-    Label myLabel;
+    private Label myLabel;
 
-    public void myButtonClicked(ActionEvent actionEvent) {
+    public void btnClicked(ActionEvent actionEvent) {
         myLabel.setText("wurde geklickt");
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+
+<FlowPane alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="400" prefWidth="600" vgap="10.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.weatherfx.Controller">
+
+   <stylesheets>
+      <URL value="@stylesheet.css" />
+   </stylesheets>
+
+   <children>
+      <Button onAction="#btnClicked" text="Klick mich" />
+      <Label fx:id="myLabel" styleClass="red" text="nicht geklickt" />
+   </children>
+</FlowPane>
