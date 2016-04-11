@@ -1,10 +1,8 @@
 package de.dhbw.weatherfx.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.*;
+import java.util.Properties;
 
 /**
  * Created by behrends on 11/04/16.
@@ -15,7 +13,13 @@ public class WeatherUtil {
 
         String host = "api.openweathermap.org";
         String path = "/data/2.5/weather";
-        String queryString = "q=" + cityName + "&" + "APPID=";
+        String queryString = null;
+
+        try {
+            queryString = "q=" + cityName + "&" + "APPID=" + getAPIKeyFromFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             URL url = new URI("http", host, path, queryString, null).toURL();
@@ -45,5 +49,14 @@ public class WeatherUtil {
         }
 
         return result;
+    }
+
+    private static String getAPIKeyFromFile() throws IOException {
+        Properties properties = new Properties();
+        BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config.properties"));
+        properties.load(stream);
+        stream.close();
+        String apiKey = properties.getProperty("api.key");
+        return apiKey;
     }
 }
