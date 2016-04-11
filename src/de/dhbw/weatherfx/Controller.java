@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 
 public class Controller{
     @FXML
-    ListView<City> citiesList;
+    ListView<City> cityListView;
 
     @FXML
     TextField citiesField;
@@ -37,6 +37,6 @@ public class Controller{
         cities.add(new City("Freiburg"));
         cities.add(new City("Hamburg"));
 
-        citiesList.setItems(cities);
+        cityListView.setItems(cities);
     }
 }
