@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.4" prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml" fx:controller="de.dhbw.weatherfx.Controller">
+<SplitPane dividerPositions="0.4" prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/null" fx:controller="de.dhbw.weatherfx.Controller">
    <stylesheets>
       <URL value="@stylesheet.css" />
    </stylesheets>
@@ -30,6 +31,10 @@
             <ListView fx:id="cityListView" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+      <AnchorPane>
+         <children>
+            <Label fx:id="cityName" layoutX="191.0" layoutY="241.0" />
+         </children>
+      </AnchorPane>
    </items>
 </SplitPane>

@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -14,6 +15,9 @@ public class Controller{
 
     @FXML
     TextField citiesField;
+
+    @FXML
+    Label cityName;
 
     private ObservableList<City> cities;
 
@@ -38,5 +42,13 @@ public class Controller{
         cities.add(new City("Hamburg"));
 
         cityListView.setItems(cities);
+
+        cityListView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> displayWeatherForecast(newValue)
+        );
+    }
+
+    private void displayWeatherForecast(City city) {
+        cityName.setText(city.getName());
     }
 }
