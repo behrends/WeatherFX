@@ -20,10 +20,7 @@ public class Controller{
     public void btnClicked(ActionEvent actionEvent) {
         String cityName = citiesField.getText();
 
-        City city = new City();
-        city.setName(cityName);
-
-        cities.add(city);
+        cities.add(new City(cityName));
         citiesField.clear();
     }
 
@@ -34,6 +31,12 @@ public class Controller{
     @FXML
     private void initialize() {
         cities = FXCollections.observableArrayList();
+
+        cities.add(new City("Barcelona"));
+        cities.add(new City("Basel"));
+        cities.add(new City("Freiburg"));
+        cities.add(new City("Hamburg"));
+
         citiesList.setItems(cities);
     }
 }

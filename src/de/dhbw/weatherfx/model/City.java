@@ -6,6 +6,10 @@ package de.dhbw.weatherfx.model;
 public class City {
     private String name;
 
+    public City(String name) {
+        this.name = name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
