@@ -1,14 +1,39 @@
 package de.dhbw.weatherfx;
 
+import de.dhbw.weatherfx.model.City;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
-public class Controller {
+public class Controller{
     @FXML
-    private Label myLabel;
+    ListView<City> citiesList;
+
+    @FXML
+    TextField citiesField;
+
+    private ObservableList<City> cities;
 
     public void btnClicked(ActionEvent actionEvent) {
-        myLabel.setText("wurde geklickt");
+        String cityName = citiesField.getText();
+
+        City city = new City();
+        city.setName(cityName);
+
+        cities.add(city);
+        citiesField.clear();
+    }
+
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
+    @FXML
+    private void initialize() {
+        cities = FXCollections.observableArrayList();
+        citiesList.setItems(cities);
     }
 }
