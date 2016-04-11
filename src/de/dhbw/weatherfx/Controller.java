@@ -1,6 +1,7 @@
 package de.dhbw.weatherfx;
 
 import de.dhbw.weatherfx.model.City;
+import de.dhbw.weatherfx.model.WeatherUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +19,9 @@ public class Controller{
 
     @FXML
     Label cityName;
+
+    @FXML
+    Label temperature;
 
     private ObservableList<City> cities;
 
@@ -50,5 +54,6 @@ public class Controller{
 
     private void displayWeatherForecast(City city) {
         cityName.setText(city.getName());
+        temperature.setText(WeatherUtil.getWeather(city.getName()));
     }
 }

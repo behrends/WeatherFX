@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.4" prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/null" fx:controller="de.dhbw.weatherfx.Controller">
+<SplitPane dividerPositions="0.4" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.weatherfx.Controller">
    <stylesheets>
       <URL value="@stylesheet.css" />
    </stylesheets>
@@ -34,6 +34,7 @@
       <AnchorPane>
          <children>
             <Label fx:id="cityName" layoutX="191.0" layoutY="241.0" />
+            <Label fx:id="temperature" layoutX="191.0" layoutY="273.0" />
          </children>
       </AnchorPane>
    </items>
