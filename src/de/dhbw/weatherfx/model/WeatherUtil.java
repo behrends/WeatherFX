@@ -1,24 +1,34 @@
 package de.dhbw.weatherfx.model;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 
 import java.io.*;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Properties;
 
 /**
  * Created by behrends on 11/04/16.
  */
-public class WeatherUtil {
+public class WeatherUtil extends Thread {
+    private String cityName;
+
     public static StringProperty currentTemp = new SimpleStringProperty();
 
-    public static void getWeather(String cityName) {
+    public WeatherUtil(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public void run() {
         String host = "api.openweathermap.org";
         String path = "/data/2.5/weather";
 
         try {
+            // TODO: get API-key only once
             String queryString = "q=" + cityName + "&units=metric&" + "APPID=" + getAPIKeyFromFile();
 
             URL url = new URI("http", host, path, queryString, null).toURL();
@@ -29,7 +39,8 @@ public class WeatherUtil {
                 e.printStackTrace();
             }
 
-            currentTemp.setValue("10 " + cityName);
+            // update bound property for temperature on JavaFX Application Thread
+            Platform.runLater(() -> currentTemp.setValue("temperature in " + cityName));
 
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.connect();
@@ -50,7 +61,7 @@ public class WeatherUtil {
         }
     }
 
-    private static String getAPIKeyFromFile() throws IOException {
+    private String getAPIKeyFromFile() throws IOException {
         Properties properties = new Properties();
         BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config.properties"));
         properties.load(stream);

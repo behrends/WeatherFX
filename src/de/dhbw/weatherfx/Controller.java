@@ -51,11 +51,14 @@ public class Controller{
                 (observable, oldValue, newValue) -> displayWeatherForecast(newValue)
         );
 
+        // bind label value to property in WeatherUtil
+        // whenever WeatherUtil.currentTemp changes, the label is updated
         temperature.textProperty().bind(WeatherUtil.currentTemp);
     }
 
     private void displayWeatherForecast(City city) {
         cityName.setText(city.getName());
-        WeatherUtil.getWeather(city.getName());
+        // start new weather data request in background
+        new WeatherUtil(city.getName()).start();
     }
 }
