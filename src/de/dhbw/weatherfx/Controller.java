@@ -50,10 +50,12 @@ public class Controller{
         cityListView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> displayWeatherForecast(newValue)
         );
+
+        temperature.textProperty().bind(WeatherUtil.currentTemp);
     }
 
     private void displayWeatherForecast(City city) {
         cityName.setText(city.getName());
-        temperature.setText(WeatherUtil.getWeather(city.getName()));
+        WeatherUtil.getWeather(city.getName());
     }
 }
