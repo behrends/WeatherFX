@@ -1,11 +1,11 @@
 package de.dhbw.weatherfx.model;
 
+import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -32,29 +32,11 @@ public class WeatherUtil extends Thread {
             String queryString = "q=" + cityName + "&units=metric&" + "APPID=" + getAPIKeyFromFile();
 
             URL url = new URI("http", host, path, queryString, null).toURL();
-
-            try { // simulate slow network
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Reader reader = new InputStreamReader(url.openStream());
+            WeatherData weatherData = new Gson().fromJson(reader, WeatherData.class);
 
             // update bound property for temperature on JavaFX Application Thread
-            Platform.runLater(() -> currentTemp.setValue("temperature in " + cityName));
-
-            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-            urlConnection.connect();
-
-            InputStream inputStream = urlConnection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuffer buffer = new StringBuffer();
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line).append("\n");
-            }
-            System.out.println(buffer);
-
+            Platform.runLater(() -> currentTemp.setValue(weatherData.getTemperature() + " \u00B0C"));
 
         } catch (URISyntaxException | IOException e) {
             System.err.println("An error occurred while requesting data from weather API.");
