@@ -19,7 +19,11 @@ public class WeatherUtil {
 
             URL url = new URI("http", host, path, queryString, null).toURL();
 
-            System.out.println(url);
+            try { // simulate slow network
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.connect();
