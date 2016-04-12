@@ -46,8 +46,8 @@ public class WeatherUtil extends Thread {
             urlConnection.connect();
 
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuffer buffer = new StringBuffer();
 
             String line;
             while ((line = reader.readLine()) != null) {
