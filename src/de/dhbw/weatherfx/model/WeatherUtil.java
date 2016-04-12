@@ -13,15 +13,10 @@ public class WeatherUtil {
 
         String host = "api.openweathermap.org";
         String path = "/data/2.5/weather";
-        String queryString = null;
 
         try {
-            queryString = "q=" + cityName + "&" + "APPID=" + getAPIKeyFromFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            String queryString = "q=" + cityName + "&" + "APPID=" + getAPIKeyFromFile();
 
-        try {
             URL url = new URI("http", host, path, queryString, null).toURL();
 
             System.out.println(url);
@@ -29,23 +24,18 @@ public class WeatherUtil {
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.connect();
 
-            // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
             while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
             System.out.println(buffer);
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (URISyntaxException | IOException e) {
+            System.err.println("An error occurred while requesting data from weather API.");
         }
 
         return result;
@@ -56,7 +46,6 @@ public class WeatherUtil {
         BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config.properties"));
         properties.load(stream);
         stream.close();
-        String apiKey = properties.getProperty("api.key");
-        return apiKey;
+        return properties.getProperty("api.key");
     }
 }
