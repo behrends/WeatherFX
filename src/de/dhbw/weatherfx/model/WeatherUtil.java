@@ -23,6 +23,7 @@ public class WeatherUtil extends Thread {
         this.cityName = cityName;
     }
 
+    @Override
     public void run() {
         String host = "api.openweathermap.org";
         String path = "/data/2.5/weather";
