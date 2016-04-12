@@ -9,13 +9,13 @@ import java.util.Properties;
  */
 public class WeatherUtil {
     public static String getWeather(String cityName) {
-        String result = "20";
+        String result = "???";
 
         String host = "api.openweathermap.org";
         String path = "/data/2.5/weather";
 
         try {
-            String queryString = "q=" + cityName + "&" + "APPID=" + getAPIKeyFromFile();
+            String queryString = "q=" + cityName + "&units=metric&" + "APPID=" + getAPIKeyFromFile();
 
             URL url = new URI("http", host, path, queryString, null).toURL();
 
