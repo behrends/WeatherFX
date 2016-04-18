@@ -20,7 +20,7 @@ public class CurrentWeatherTask extends Task<WeatherData> {
     @Override
     protected WeatherData call() throws Exception {
         WeatherData data = WeatherUtil.getCurrentWeatherDataForCity(city);
-        Platform.runLater(() -> currentTemp.setValue(data.getTemperature() + " \u00B0C"));
+        Platform.runLater(() -> currentTemp.setValue(data.getTemperature() + ""));
         return data;
     }
 }

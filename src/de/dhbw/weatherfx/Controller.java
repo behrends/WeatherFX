@@ -3,6 +3,7 @@ package de.dhbw.weatherfx;
 import de.dhbw.weatherfx.model.City;
 import de.dhbw.weatherfx.model.CurrentWeatherTask;
 import de.dhbw.weatherfx.model.WeatherData;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -63,7 +64,7 @@ public class Controller{
 
         // bind label value to property in WeatherUtil
         // whenever WeatherUtil.currentTemp changes, the label is updated
-        temperature.textProperty().bind(CurrentWeatherTask.currentTemp);
+        temperature.textProperty().bind(Bindings.concat(CurrentWeatherTask.currentTemp, " \u00B0C"));
     }
 
     private void displayWeatherForecast(City city) {
