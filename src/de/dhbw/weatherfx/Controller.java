@@ -1,9 +1,10 @@
 package de.dhbw.weatherfx;
 
 import de.dhbw.weatherfx.model.City;
-import de.dhbw.weatherfx.model.WeatherUtil;
+import de.dhbw.weatherfx.model.CurrentWeatherTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -53,12 +54,14 @@ public class Controller{
 
         // bind label value to property in WeatherUtil
         // whenever WeatherUtil.currentTemp changes, the label is updated
-        temperature.textProperty().bind(WeatherUtil.currentTemp);
+        temperature.textProperty().bind(CurrentWeatherTask.currentTemp);
     }
 
     private void displayWeatherForecast(City city) {
         cityName.setText(city.getName());
         // start new weather data request in background
-        new WeatherUtil(city.getName()).start();
+        Task task = new CurrentWeatherTask(city.getName());
+        Thread thread = new Thread(task);
+        thread.start();
     }
 }

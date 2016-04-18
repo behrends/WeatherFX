@@ -1,9 +1,6 @@
 package de.dhbw.weatherfx.model;
 
 import com.google.gson.Gson;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 import java.io.*;
 import java.net.URI;
@@ -14,16 +11,11 @@ import java.util.Properties;
 /**
  * Created by behrends on 11/04/16.
  */
-public class WeatherUtil extends Thread {
-    private String cityName;
-
-    public static StringProperty currentTemp = new SimpleStringProperty();
-
-    public WeatherUtil(String cityName) {
-        this.cityName = cityName;
-    }
-
+public class WeatherUtil {
     private static String apiKey;
+
+    private static final String HOST = "api.openweathermap.org";
+    private static final String PATH_PREFIX = "/data/2.5/";
 
     // read API key from file (happens only once after JVM start)
     static {
@@ -39,23 +31,18 @@ public class WeatherUtil extends Thread {
         }
     }
 
-    @Override
-    public void run() {
-        String host = "api.openweathermap.org";
-        String path = "/data/2.5/weather";
+    public static WeatherData getCurrentWeatherDataForCity(String city) {
+        String path = PATH_PREFIX + "weather";
+        String queryString = "q=" + city + "&units=metric&" + "APPID=" + apiKey;
 
         try {
-            String queryString = "q=" + cityName + "&units=metric&" + "APPID=" + apiKey;
-
-            URL url = new URI("http", host, path, queryString, null).toURL();
+            URL url = new URI("http", HOST, path, queryString, null).toURL();
             Reader reader = new InputStreamReader(url.openStream());
-            WeatherData weatherData = new Gson().fromJson(reader, WeatherData.class);
-
-            // update bound property for temperature on JavaFX Application Thread
-            Platform.runLater(() -> currentTemp.setValue(weatherData.getTemperature() + " \u00B0C"));
-
+            return new Gson().fromJson(reader, WeatherData.class);
         } catch (URISyntaxException | IOException e) {
             System.err.println("An error occurred while requesting data from weather API.");
         }
+
+        return null;
     }
 }
