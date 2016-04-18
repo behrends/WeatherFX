@@ -23,14 +23,29 @@ public class WeatherUtil extends Thread {
         this.cityName = cityName;
     }
 
+    private static String apiKey;
+
+    // read API key from file (happens only once after JVM start)
+    static {
+        try {
+            Properties properties = new Properties();
+            BufferedInputStream stream = null;
+            stream = new BufferedInputStream(new FileInputStream("config.properties"));
+            properties.load(stream);
+            stream.close();
+            apiKey = properties.getProperty("api.key");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         String host = "api.openweathermap.org";
         String path = "/data/2.5/weather";
 
         try {
-            // TODO: get API-key only once
-            String queryString = "q=" + cityName + "&units=metric&" + "APPID=" + getAPIKeyFromFile();
+            String queryString = "q=" + cityName + "&units=metric&" + "APPID=" + apiKey;
 
             URL url = new URI("http", host, path, queryString, null).toURL();
             Reader reader = new InputStreamReader(url.openStream());
@@ -42,13 +57,5 @@ public class WeatherUtil extends Thread {
         } catch (URISyntaxException | IOException e) {
             System.err.println("An error occurred while requesting data from weather API.");
         }
-    }
-
-    private String getAPIKeyFromFile() throws IOException {
-        Properties properties = new Properties();
-        BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config.properties"));
-        properties.load(stream);
-        stream.close();
-        return properties.getProperty("api.key");
     }
 }
