@@ -2,8 +2,10 @@ package de.dhbw.weatherfx;
 
 import de.dhbw.weatherfx.model.City;
 import de.dhbw.weatherfx.model.CurrentWeatherTask;
+import de.dhbw.weatherfx.model.WeatherData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +27,13 @@ public class Controller{
     Label temperature;
 
     private ObservableList<City> cities;
+
+    private Service<WeatherData> currentWeatherDataService = new Service<WeatherData>() {
+        @Override
+        protected Task<WeatherData> createTask() {
+            return new CurrentWeatherTask(cityName.getText());
+        }
+    };
 
     public void btnClicked(ActionEvent actionEvent) {
         String cityName = citiesField.getText();
@@ -60,8 +69,6 @@ public class Controller{
     private void displayWeatherForecast(City city) {
         cityName.setText(city.getName());
         // start new weather data request in background
-        Task task = new CurrentWeatherTask(city.getName());
-        Thread thread = new Thread(task);
-        thread.start();
+        currentWeatherDataService.restart();
     }
 }
