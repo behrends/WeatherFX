@@ -3,7 +3,6 @@ package de.dhbw.weatherfx;
 import de.dhbw.weatherfx.model.City;
 import de.dhbw.weatherfx.model.CurrentWeatherTask;
 import de.dhbw.weatherfx.model.WeatherData;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -26,6 +25,8 @@ public class Controller{
 
     @FXML
     Label temperature;
+
+    private WeatherData currentData;
 
     private ObservableList<City> cities;
 
@@ -62,14 +63,26 @@ public class Controller{
                 (observable, oldValue, newValue) -> displayWeatherForecast(newValue)
         );
 
-        // bind label value to property in WeatherUtil
-        // whenever WeatherUtil.currentTemp changes, the label is updated
-        temperature.textProperty().bind(Bindings.concat(CurrentWeatherTask.currentTemp, " \u00B0C"));
+        // whenever new data has been fetched, we update the UI
+        // (valueProperty is the result of the background service)
+        currentWeatherDataService.valueProperty().addListener(
+                (observable, oldValue, newValue) -> updateCurrentWeatherPane(newValue)
+        );
     }
 
     private void displayWeatherForecast(City city) {
         cityName.setText(city.getName());
         // start new weather data request in background
         currentWeatherDataService.restart();
+    }
+
+    private void updateCurrentWeatherPane(WeatherData data) {
+        currentData = data;
+        if(currentData != null) {
+            temperature.setText(currentData.getTemperature() + " \u00B0C");
+        }
+        else {
+            temperature.setText(null);
+        }
     }
 }

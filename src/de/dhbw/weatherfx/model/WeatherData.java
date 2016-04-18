@@ -16,6 +16,11 @@ public class WeatherData {
     public float getTemperature() {
         return main.temp;
     }
+
+    @Override
+    public String toString() {
+        return "Temp: " + getTemperature();
+    }
 }
 
 /* Example JSON
