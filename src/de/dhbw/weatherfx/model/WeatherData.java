@@ -1,5 +1,7 @@
 package de.dhbw.weatherfx.model;
 
+import java.util.List;
+
 /**
  * Created by behrends on 12/04/16.
  */
@@ -13,13 +15,28 @@ public class WeatherData {
 
     private Main main;
 
+    private class Weather {
+        private String description;
+        private String icon;
+    }
+
+    private List<Weather> weather;
+
     public float getTemperature() {
         return main.temp;
     }
 
+    public String getDescription() {
+        return weather.get(0).description;
+    }
+
+    public String getIconAdress() {
+        return "http://openweathermap.org/img/w/" + weather.get(0).icon + ".png";
+    }
+
     @Override
     public String toString() {
-        return "Temp: " + getTemperature();
+        return "WeatherData[Temp: " + getTemperature() + ", Desc: " + getDescription() + "]";
     }
 }
 

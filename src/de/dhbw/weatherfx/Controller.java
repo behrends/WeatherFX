@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 public class Controller{
     @FXML
@@ -22,6 +23,9 @@ public class Controller{
 
     @FXML
     Label cityName;
+
+    @FXML
+    Label description;
 
     @FXML
     Label temperature;
@@ -79,9 +83,12 @@ public class Controller{
     private void updateCurrentWeatherPane(WeatherData data) {
         currentData = data;
         if(currentData != null) {
+            description.setText(currentData.getDescription());
+            temperature.setGraphic(new ImageView(currentData.getIconAdress()));
             temperature.setText(currentData.getTemperature() + " \u00B0C");
         }
         else {
+            description.setText(null);
             temperature.setText(null);
         }
     }
