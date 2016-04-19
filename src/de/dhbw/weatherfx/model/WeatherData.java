@@ -1,5 +1,9 @@
 package de.dhbw.weatherfx.model;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -8,9 +12,9 @@ import java.util.List;
 
 // Model class to hold weather data; used with Gson library (see JSON structure below)
 public class WeatherData {
-    // JSON: main:{temp:11.05,etc.}
     private class Main {
         private float temp;
+        private short humidity;
     }
 
     private Main main;
@@ -22,6 +26,21 @@ public class WeatherData {
 
     private List<Weather> weather;
 
+    private class Wind {
+        private float speed;
+    }
+
+    private Wind wind;
+
+    private class Sys {
+        private long sunrise;
+        private long sunset;
+    }
+
+    private Sys sys;
+
+    private long dt;
+
     public float getTemperature() {
         return main.temp;
     }
@@ -30,8 +49,31 @@ public class WeatherData {
         return weather.get(0).description;
     }
 
+    public float getWind() {
+        return wind.speed;
+    }
+
+    public short getHumidity() {
+        return main.humidity;
+    }
+
     public String getIconAdress() {
         return "http://openweathermap.org/img/w/" + weather.get(0).icon + ".png";
+    }
+
+    public LocalTime getSunrise() {
+        Date date = new Date(sys.sunrise * 1000);
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+    }
+
+    public LocalTime getSunset() {
+        Date date = new Date(sys.sunset * 1000);
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+    }
+
+    public LocalDateTime getTimeStamp() {
+        Date date = new Date(dt * 1000);
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     @Override

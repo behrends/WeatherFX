@@ -14,6 +14,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+import java.time.format.DateTimeFormatter;
+
 public class Controller{
     @FXML
     ListView<City> cityListView;
@@ -22,13 +24,8 @@ public class Controller{
     TextField citiesField;
 
     @FXML
-    Label cityName;
+    Label cityName, description, temperature, wind, humidity, sunrise, sunset, timestamp;
 
-    @FXML
-    Label description;
-
-    @FXML
-    Label temperature;
 
     private WeatherData currentData;
 
@@ -86,6 +83,14 @@ public class Controller{
             description.setText(currentData.getDescription());
             temperature.setGraphic(new ImageView(currentData.getIconAdress()));
             temperature.setText(currentData.getTemperature() + " \u00B0C");
+            wind.setText("Wind: " + currentData.getWind() + " m/s");
+            humidity.setText("Humidity: " + currentData.getHumidity() + "%");
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            sunrise.setText("Sunrise: " + dateTimeFormatter.format(currentData.getSunrise()));
+            sunset.setText("Sunset: " + dateTimeFormatter.format(currentData.getSunset()));
+            dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+            timestamp.setText("measured at: " + dateTimeFormatter.format(currentData.getTimeStamp()));
         }
         else {
             description.setText(null);

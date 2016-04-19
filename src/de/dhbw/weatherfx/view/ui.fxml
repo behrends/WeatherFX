@@ -35,6 +35,11 @@
             <Label fx:id="cityName" id="cityNameLabel" />
             <Label fx:id="description" styleClass="boldLabel" />
             <Label fx:id="temperature" id="temperatureLabel" />
+            <Label fx:id="wind" />
+            <Label fx:id="humidity" />
+            <Label fx:id="sunrise" />
+            <Label fx:id="sunset" />
+            <Label fx:id="timestamp" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
