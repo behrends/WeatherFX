@@ -3,3 +3,17 @@
     -fx-background-color: #286090;
     -fx-text-fill: #fff;
 }
+
+#cityNameLabel {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+.boldLabel {
+    -fx-font-weight: bold;
+}
+
+#temperatureLabel {
+    -fx-font-weight: bold;
+    -fx-font-size: 36px;
+}
