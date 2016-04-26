@@ -9,14 +9,20 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 public class Controller{
     @FXML
@@ -37,17 +43,65 @@ public class Controller{
         }
     };
 
+    private class CityCell extends ListCell<City> {
+        private Button deleteBtn;
+        private Label name;
+        private GridPane pane;
+
+        public CityCell() {
+            super();
+
+            deleteBtn = new Button("X");
+            deleteBtn.setPadding(Insets.EMPTY); // button with no padding
+            deleteBtn.setStyle("-fx-background-color: #C9302C;");
+            deleteBtn.setOnAction((event) -> {
+                City city = getItem();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Remove " + city + " from list");
+                alert.setHeaderText(null);
+                alert.setContentText("Do you really want to remove " + city + " from the list?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    cities.remove(city);
+                    saveCitiesToDisk();
+                }
+            });
+
+            // add nodes to cell (label and button)
+            name = new Label();
+            pane = new GridPane();
+            pane.add(name, 0, 0);
+            pane.add(deleteBtn, 1, 0);
+
+            // make sure the button is aligned to the far right
+            ColumnConstraints rightCol = new ColumnConstraints();
+            rightCol.setHalignment(HPos.RIGHT);
+            rightCol.setHgrow(Priority.ALWAYS);
+            pane.getColumnConstraints().addAll(new ColumnConstraints(), rightCol);
+
+            setText(null);
+        }
+        @Override
+        protected void updateItem(City item, boolean empty) {
+            super.updateItem(item, empty);
+            setEditable(false);
+            if (item != null && !empty) {
+                name.setText(item.toString());
+                setGraphic(pane);
+            } else {
+                setGraphic(null);
+            }
+        }
+    }
+
     public void btnClicked(ActionEvent actionEvent) {
         String cityName = citiesField.getText();
 
         cities.add(new City(cityName));
         citiesField.clear();
 
-        // save cities to disk:
-        // 1. create an empty array of City objects to hold all cities
-        City[] cityArray = new City[cities.size()];
-        // 2. convert cities list to cityArray and pass to method saving cities to file
-        Storage.saveCitiesToFile(cities.toArray(cityArray));
+        saveCitiesToDisk();
     }
 
     /**
@@ -61,8 +115,8 @@ public class Controller{
         cities = FXCollections.observableArrayList();
         cities.setAll(cityList);
 
+        cityListView.setCellFactory((param) -> new CityCell());
         cityListView.setItems(cities);
-
         cityListView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> displayWeatherForecast(newValue)
         );
@@ -98,5 +152,14 @@ public class Controller{
             description.setText(null);
             temperature.setText(null);
         }
+    }
+
+
+    private void saveCitiesToDisk() {
+        // save cities to disk:
+        // 1. create an empty array of City objects to hold all cities
+        City[] cityArray = new City[cities.size()];
+        // 2. convert cities list to cityArray and pass to method saving cities to file
+        Storage.saveCitiesToFile(cities.toArray(cityArray));
     }
 }
