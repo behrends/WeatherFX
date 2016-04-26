@@ -21,8 +21,7 @@ public class WeatherUtil {
     static {
         try {
             Properties properties = new Properties();
-            BufferedInputStream stream = null;
-            stream = new BufferedInputStream(new FileInputStream("config.properties"));
+            BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config.properties"));
             properties.load(stream);
             stream.close();
             apiKey = properties.getProperty("api.key");

@@ -29,8 +29,6 @@ public class Controller{
     Label cityName, description, temperature, wind, humidity, sunrise, sunset, timestamp;
 
 
-    private WeatherData currentData;
-
     private ObservableList<City> cities;
 
     private Service<WeatherData> currentWeatherDataService = new Service<WeatherData>() {
@@ -83,8 +81,7 @@ public class Controller{
         currentWeatherDataService.restart();
     }
 
-    private void updateCurrentWeatherPane(WeatherData data) {
-        currentData = data;
+    private void updateCurrentWeatherPane(WeatherData currentData) {
         if(currentData != null) {
             description.setText(currentData.getDescription());
             temperature.setGraphic(new ImageView(currentData.getIconAdress()));
