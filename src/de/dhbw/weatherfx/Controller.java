@@ -2,6 +2,7 @@ package de.dhbw.weatherfx;
 
 import de.dhbw.weatherfx.model.City;
 import de.dhbw.weatherfx.model.CurrentWeatherTask;
+import de.dhbw.weatherfx.model.Storage;
 import de.dhbw.weatherfx.model.WeatherData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Controller{
     @FXML
@@ -43,6 +45,12 @@ public class Controller{
 
         cities.add(new City(cityName));
         citiesField.clear();
+
+        // save cities to disk:
+        // 1. create an empty array of City objects to hold all cities
+        City[] cityArray = new City[cities.size()];
+        // 2. convert cities list to cityArray and pass to method saving cities to file
+        Storage.saveCitiesToFile(cities.toArray(cityArray));
     }
 
     /**
@@ -51,12 +59,10 @@ public class Controller{
      */
     @FXML
     private void initialize() {
+        // read cities from file and populate city list
+        List<City> cityList = Storage.readCitiesFromFile();
         cities = FXCollections.observableArrayList();
-
-        cities.add(new City("Barcelona"));
-        cities.add(new City("Basel"));
-        cities.add(new City("Freiburg"));
-        cities.add(new City("Hamburg"));
+        cities.setAll(cityList);
 
         cityListView.setItems(cities);
 
