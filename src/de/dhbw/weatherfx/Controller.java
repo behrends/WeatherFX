@@ -20,14 +20,13 @@ import java.util.List;
 
 public class Controller{
     @FXML
-    ListView<City> cityListView;
+    private ListView<City> cityListView;
 
     @FXML
-    TextField citiesField;
+    private TextField citiesField;
 
     @FXML
-    Label cityName, description, temperature, wind, humidity, sunrise, sunset, timestamp;
-
+    private Label cityName, description, temperature, wind, humidity, sunrise, sunset, timestamp;
 
     private ObservableList<City> cities;
 
