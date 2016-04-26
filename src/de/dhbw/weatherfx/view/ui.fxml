@@ -10,40 +10,35 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.4" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.weatherfx.Controller">
+<SplitPane dividerPositions="0.4" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/null"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.weatherfx.Controller">
    <stylesheets>
-      <URL value="@stylesheet.css" />
+      <URL value="@stylesheet.css"/>
    </stylesheets>
 
-   <items>
-      <VBox>
+   <VBox>
+      <HBox spacing="10.0">
          <children>
-            <HBox spacing="10.0">
-               <children>
-                  <TextField fx:id="citiesField" />
-                  <Button mnemonicParsing="false" onAction="#btnClicked" text="Add city" />
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </HBox>
-            <ListView fx:id="cityListView" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-      <VBox spacing="10.0">
-         <children>
-            <Label fx:id="cityName" id="cityNameLabel" />
-            <Label fx:id="description" styleClass="boldLabel" />
-            <Label fx:id="temperature" id="temperatureLabel" />
-            <Label fx:id="wind" />
-            <Label fx:id="humidity" />
-            <Label fx:id="sunrise" />
-            <Label fx:id="sunset" />
-            <Label fx:id="timestamp" />
+            <TextField fx:id="citiesField"/>
+            <Button mnemonicParsing="false" onAction="#btnClicked" text="Add city"/>
          </children>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
          </padding>
-      </VBox>
-   </items>
+      </HBox>
+      <ListView fx:id="cityListView" VBox.vgrow="ALWAYS"/>
+   </VBox>
+   <VBox spacing="10.0">
+      <padding>
+         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+      </padding>
+      <Label fx:id="cityName" id="cityNameLabel"/>
+      <Label fx:id="description" styleClass="boldLabel"/>
+      <Label fx:id="temperature" id="temperatureLabel"/>
+      <Label fx:id="wind"/>
+      <Label fx:id="humidity"/>
+      <Label fx:id="sunrise"/>
+      <Label fx:id="sunset"/>
+      <Label fx:id="timestamp"/>
+   </VBox>
 </SplitPane>
