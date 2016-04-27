@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -124,6 +125,8 @@ public class Controller{
         currentWeatherDataService.valueProperty().addListener(
                 (observable, oldValue, newValue) -> updateCurrentWeatherPane(newValue)
         );
+
+        TextFields.bindAutoCompletion(citiesField, "Freiburg", "Frankfurt", "Basel", "Barcelona");
     }
 
     private void displayWeatherForecast(City city) {
