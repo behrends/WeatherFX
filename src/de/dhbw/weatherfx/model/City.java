@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by behrends on 08/04/16.
  */
 public class City implements Serializable {
-    private String name;
+    private String name, countryName;
 
     public City(String name) {
         this.name = name;
@@ -16,12 +16,8 @@ public class City implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
-        return name;
+        return name + ", " + countryName;
     }
 }

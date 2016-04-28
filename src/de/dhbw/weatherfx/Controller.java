@@ -1,9 +1,6 @@
 package de.dhbw.weatherfx;
 
-import de.dhbw.weatherfx.model.City;
-import de.dhbw.weatherfx.model.CurrentWeatherTask;
-import de.dhbw.weatherfx.model.Storage;
-import de.dhbw.weatherfx.model.WeatherData;
+import de.dhbw.weatherfx.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -126,7 +123,7 @@ public class Controller{
                 (observable, oldValue, newValue) -> updateCurrentWeatherPane(newValue)
         );
 
-        TextFields.bindAutoCompletion(citiesField, "Freiburg", "Frankfurt", "Basel", "Barcelona");
+        TextFields.bindAutoCompletion(citiesField, (suggestionRequest) -> GeonamesUtil.getMovies(suggestionRequest.getUserText()));
     }
 
     private void displayWeatherForecast(City city) {
