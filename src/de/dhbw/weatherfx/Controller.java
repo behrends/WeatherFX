@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -14,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.time.format.DateTimeFormatter;
@@ -91,15 +91,6 @@ public class Controller{
         }
     }
 
-    public void btnClicked(ActionEvent actionEvent) {
-        String cityName = citiesField.getText();
-
-        cities.add(new City(cityName));
-        citiesField.clear();
-
-        saveCitiesToDisk();
-    }
-
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -123,7 +114,14 @@ public class Controller{
                 (observable, oldValue, newValue) -> updateCurrentWeatherPane(newValue)
         );
 
-        TextFields.bindAutoCompletion(citiesField, (suggestionRequest) -> GeonamesUtil.getMovies(suggestionRequest.getUserText()));
+        AutoCompletionBinding<City> autoCompletionBinding =
+                TextFields.bindAutoCompletion(citiesField,
+                        suggestionRequest -> GeonamesUtil.getMovies(suggestionRequest.getUserText()));
+        autoCompletionBinding.setOnAutoCompleted(event -> {
+            cities.add(event.getCompletion());
+            citiesField.clear();
+            saveCitiesToDisk();
+        });
     }
 
     private void displayWeatherForecast(City city) {
@@ -151,7 +149,6 @@ public class Controller{
             temperature.setText(null);
         }
     }
-
 
     private void saveCitiesToDisk() {
         // save cities to disk:
