@@ -44,7 +44,7 @@ public class Controller{
         private Label name;
         private GridPane pane;
 
-        public CityCell() {
+        private CityCell() {
             super();
 
             deleteBtn = new Button("X");
@@ -58,7 +58,7 @@ public class Controller{
                 alert.setContentText("Do you really want to remove " + city + " from the list?");
 
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
+                if (result.isPresent() && result.get() == ButtonType.OK){
                     cities.remove(city);
                     saveCitiesToDisk();
                 }
