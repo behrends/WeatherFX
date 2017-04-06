@@ -24,7 +24,7 @@ public class GeonamesUtil {
         private City[] geonames;
     }
 
-    public static List<City> getMovies(String query) {
+    public static List<City> getCities(String query) {
         try{
             String queryString = "username=demo&cities=cities1000&type=json&name_startsWith=" + query;
             URL url = new URI("http", "api.geonames.org", "/search", queryString, null).toURL();

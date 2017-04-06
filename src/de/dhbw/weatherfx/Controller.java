@@ -116,7 +116,7 @@ public class Controller{
 
         AutoCompletionBinding<City> autoCompletionBinding =
                 TextFields.bindAutoCompletion(citiesField,
-                        suggestionRequest -> GeonamesUtil.getMovies(suggestionRequest.getUserText()));
+                        suggestionRequest -> GeonamesUtil.getCities(suggestionRequest.getUserText()));
         autoCompletionBinding.setOnAutoCompleted(event -> {
             cities.add(event.getCompletion());
             citiesField.clear();
