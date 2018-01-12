@@ -34,6 +34,9 @@ public class GeonamesUtil {
         } catch (URISyntaxException | IOException e) {
             System.err.println("An error occurred while requesting data from geonames API.");
             Logger.getLogger(GeonamesUtil.class.getName()).log(Level.SEVERE, null, e);
+        } catch (Exception x) {
+            // TODO: handle case where daily limit of 30000 credits at geonames.org is reached
+            x.printStackTrace();
         }
         return null;
     }
