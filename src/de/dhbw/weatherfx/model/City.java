@@ -8,6 +8,11 @@ import java.io.Serializable;
 public class City implements Serializable {
     private String name, countryName;
 
+    public City(String name, String countryName) {
+        this.name = name;
+        this.countryName = countryName;
+    }
+
     public String getName() {
         return name;
     }

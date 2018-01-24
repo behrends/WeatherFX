@@ -32,10 +32,14 @@ public class Storage {
             cities = Arrays.asList(cityArray);
         }
         catch(Exception x) {
-            System.err.println("Something went wrong while reading cities from file");
-            x.printStackTrace();
+            City[] citiesArray = new City[]{new City("Basel", "Switzerland"), new City("Freiburg", "Germany")};
+            cities = Arrays.asList(citiesArray);
+            System.err.println("Error while reading cities from file, using default cities.");
+            saveCitiesToFile(citiesArray);
+        }
+        finally {
+            return cities;
         }
 
-        return cities;
     }
 }
