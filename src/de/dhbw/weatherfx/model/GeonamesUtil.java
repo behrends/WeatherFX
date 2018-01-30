@@ -19,17 +19,20 @@ import java.util.logging.Logger;
  */
 public class GeonamesUtil {
 
+
     // Simple wrapper class for JSON structure of GeonamesUtil search result to use with GSON
     private class GeonamesSearchResult {
-        private City[] geonames;
+        public City[] geonames;
     }
+
 
     public static List<City> getCities(String query) {
         try{
-            String queryString = "username=demo&cities=cities1000&type=json&name_startsWith=" + query;
+            String user = Props.geonamesUser == null ? "demo" : Props.geonamesUser;
+            String queryString = "username=" + user + "&cities=cities1000&type=json&name_startsWith=" + query;
             URL url = new URI("http", "api.geonames.org", "/search", queryString, null).toURL();
             Reader reader = new InputStreamReader(url.openStream());
-            City[] cities = new Gson().fromJson(reader, GeonamesSearchResult.class).geonames;
+            City[] cities = (new Gson()).fromJson(reader, GeonamesSearchResult.class).geonames;
             return Arrays.asList(cities);
         } catch (URISyntaxException | IOException e) {
             System.err.println("An error occurred while requesting data from geonames API.");
